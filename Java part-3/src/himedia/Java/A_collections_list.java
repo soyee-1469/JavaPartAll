@@ -75,7 +75,7 @@ public class A_collections_list {
         // 순회 방법 3 : Iterator 사용
         ListIterator<String> iterator = list.listIterator();
         while (iterator.hasNext()) {
-            String element = iterator.next();
+            String element = iterator.next(); //hasNext가 true인지 false인지 체크하고 .next는 하나씩 출력
             System.out.println("Iterator : " + element);
         }
 
