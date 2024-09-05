@@ -15,6 +15,26 @@ package himedia.Java;
 
 import java.util.*;
 
+
+class Graph{
+    private LinkedList<Integer>[] grahpList;
+    public Graph(int vertexCount){
+        this.grahpList = new LinkedList[vertexCount +1];
+        //각 인접 리스트 초기화
+        for (int i = 0; i < grahpList.length; i++) {
+            grahpList[i] = new LinkedList<>();
+        }
+    }
+   //간선추가 정접v 인접w 정접1:인접 2,3
+    public void addEdge(int v, int w){
+        grahpList[v].add(w);
+        grahpList[w].add(v);
+    }
+
+    public LinkedList<Integer>[] getGrahpList() {
+        return grahpList;
+    }
+}
 public class A_collections_queue {
 
     // 1. LinkedList
@@ -200,7 +220,45 @@ public class A_collections_queue {
         }
     }
 
+    public static void exam5(){
+        boolean[] visited = new boolean[9+1];
+        //기본형boolean은 초기화 안해도 값 false 참조형(Boolean 앞자리 대문자) 는 null값이 들어가있음
+        Graph graph = new Graph(9);
+        graph.addEdge(1, 2);
+        graph.addEdge(1, 3);
+        graph.addEdge(2, 3);
+        graph.addEdge(2, 4);
+        graph.addEdge(2, 6);
+        graph.addEdge(3, 7);
+        graph.addEdge(4, 5);
+        graph.addEdge(4, 7);
+        graph.addEdge(4, 8);
+        graph.addEdge(5, 6);
+        graph.addEdge(7, 8);
+        graph.addEdge(8, 9);
+        //인접리스트
+
+        //탐색
+        int startVertex = 1;
+        Queue<Integer> queue = new LinkedList<>();
+        visited[startVertex] = true;
+        queue.add(startVertex);
+        while (queue.size()>0) {
+            int vertex = queue.poll();
+            System.out.print(vertex+ " -> ");
+
+
+            //현재 정점의 인접 정점들 중 장문하지 않은 정점을 모두 큐에 추가
+            for(int w : graph.getGrahpList()[vertex]){
+                if(!visited[w]){
+                    queue.add(w);
+                    visited[w] = true;
+                }
+            }
+        }
+
+    }
     public static void main(String[] args) {
-        exam2_5();
+        exam5();
     }
 }
