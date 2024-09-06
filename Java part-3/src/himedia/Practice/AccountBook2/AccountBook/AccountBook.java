@@ -1,4 +1,4 @@
-package himedia.Practice.AccountBook;
+package himedia.Practice.AccountBook2.AccountBook;
 
 public interface AccountBook {
 
