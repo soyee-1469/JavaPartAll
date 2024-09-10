@@ -1,0 +1,53 @@
+use java_basic;
+
+-- (1)데이터베이스생성 > (2)항목들 추가 *순서지키기, 데이터베이스 선택되었는지 확인
+CREATE DATABASE java_basic2 -- 데이터베이스 생성
+    CHARACTER SET utf8mb4 -- 한글 깨질수있어 설정
+    COLLATE utf8mb4_unicode_ci; -- 코드방식선택
+
+CREATE TABLE users
+( -- 항목별 생성
+    id   int auto_increment primary key,
+    name varchar(200),
+    age  int
+);
+
+show tables; -- 테이블 만들어졌는지 확인
+desc users; -- user항목 상세보기
+drop table users; -- 테이블 날려버리겠다.
+drop database java_basic; -- 데이터베이스 날리겠따
+
+alter table users  add column phone varchar(20); -- 새로 항목을 추가하겠다. 이름/타입/글자수
+alter table users  modify column name varchar(10) not null; -- 기존에 만들 name null값을 허용하지 않겠따.
+alter table users add column home varchar(10);
+alter table users modify column home varchar(30);
+
+drop column home; -- 컬럼중에 home삭제
+drop table users; -- user테이블 삭제 
+drop database java_basic; -- 데이터베이스 삭제
+
+CREATE DATABASE java -- '자바'데이터베이스 생성
+CHARACTER SET utf8mb4 -- '한글 안깨지게 하기'
+COLLATE utf8mb4_unicode_ci; 
+
+-- 데이터 집어넣기
+-- INSERT 쿼리
+INSERT INTO user(name2, age, phone) values(names2 'john', age 10, phone '010-1234-5678');
+
+컬럼 추가 (Add)
+ALTER TABLE table_name ADD COLUMN name varchar(32) NOT NULL;
+alter table user add column phone int; --phone이라는 컬럼 추가
+
+컬럼 변경 (Modify)
+ALTER TABLE table_name MODIFY COLUMN name varchar(16) NULL;
+
+컬럼 이름까지 변경 (Change)
+ALTER TABLE table_name CHANGE COLUMN name name2 varchar(16) NULL;
+alter table user change name name2 int;
+
+컬럼 삭제 (Drop)
+ALTER TABLE table_name DROP COLUMN ex_column;
+
+테이블 이름 변경 (RENAME)
+ALTER TABLE table_name1 RENAME table_name2;
+

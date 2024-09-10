@@ -7,23 +7,21 @@ public class AccountBookStart {
             int choice = book.printMenu();
             switch (choice) {
                 case 1:
-                    book.addContent();
+                    book.addBook();
                     break;
                 case 2:
-                    book.selectAll();
+                    book.bookAll();
                     break;
                 case 3:
-                    book.selectContent();
-                    break;
-                case 4:
                     book.deleteAll();
                     break;
-                case 5:
-                    book.deleteContent();
+                case 4:
+                    book.deleteBook();
                     break;
-                case 6:
+                case 5:
                     System.out.println("종료되었습니다.");
                     return;
+
                 default:
                     System.out.println("잘못누르셨습니다.");
             }

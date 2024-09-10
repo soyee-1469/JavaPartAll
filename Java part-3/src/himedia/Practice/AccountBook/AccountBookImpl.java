@@ -13,7 +13,7 @@ public class AccountBookImpl implements AccountBook {
     private HashMap<String, List<String>> contentMap;
     // 날짜 - 금액
     private HashMap<String, List<Integer>> moneyMap;
-    private HashMap<String, Integer> allMap;
+
 
     public AccountBookImpl() {
         this.contentMap = new HashMap<>();

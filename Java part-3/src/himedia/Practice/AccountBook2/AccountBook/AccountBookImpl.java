@@ -1,136 +1,77 @@
 package himedia.Practice.AccountBook2.AccountBook;
 
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Scanner;
 
 public class AccountBookImpl implements AccountBook {
-    private int totalMoney;
-    // 날짜 내용
-    private HashMap<String, List<String>> contentMap;
-    // 날짜 - 금액
-    private HashMap<String, List<Integer>> moneyMap;
-    private HashMap<String, Integer> allMap;
+    HashMap<String, Integer> bookMap;
 
     public AccountBookImpl() {
-        this.contentMap = new HashMap<>();
-        this.moneyMap = new HashMap<>();
-    }
-
-
-    @Override
-    public int printMenu() {
-        System.out.println("============================= 가계부 프로그램 ================================");
-        System.out.println("[1]내역추가 [2]내역조회(전체) [3]날짜로 조회하기 [4]전체삭제 [5]부분삭제(날짜기준) [6]종료");
-        System.out.println("===========================================================================");
-        Scanner sc = new Scanner(System.in);
-        System.out.println("원하는 번호를 입력하세요.");
-        return sc.nextInt();
+        this.bookMap = new HashMap<>();
     }
 
     @Override
-    public void addContent() {
+    public void addBook() {
         Scanner sc = new Scanner(System.in);
+        //자동날짜입력
         String date = getNowDateTime();
-        System.out.println("내용을 입력해주세요.");
-        String content = sc.nextLine().trim();
-        System.out.println("금액을 입력해주세요.");
+        System.out.println("항목을 입력하세요");
+        String book = sc.nextLine();
+        System.out.println("금액을 입력하세요");
         int money = sc.nextInt();
-        insertDatabase(date, content, money);
-        totalMoney += money;
-
+        bookMap.put(book, money);
+        bookMap.put(date, money);
+        System.out.println(date + " - " + book + " - " + money);
 
     }
 
-    private String getNowDateTime() {
+    public String getNowDateTime() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return LocalDateTime.now().format(formatter);
     }
 
-
     @Override
-    public void insertDatabase(String date, String content, int money) {
+    public void bookAll() {
 
-        if (contentMap.containsKey(date)) {
-
-            List<String> list = contentMap.get(date);
-            list.add(content);
-
-            List<Integer> list2 = moneyMap.get(date);
-            list2.add(money);
-
-            contentMap.put(date, list);
-            moneyMap.put(date, list2);
-
-        } else {
-
-            List<String> strings = new ArrayList<>();
-            strings.add(content);
-
-            List<Integer> integers = new ArrayList<>();
-            integers.add(money);
-
-            contentMap.put(date, strings);
-            moneyMap.put(date, integers);
-
-        }
-
-    }
-
-
-    @Override
-    public void selectAll() {
-        for (String key : contentMap.keySet()) {
-            System.out.println("날짜 :" + key);
-            System.out.println("내용 :" + contentMap.get(key));
-            System.out.println("금액 :" + moneyMap.get(key) + "원");
-            System.out.println("현재 총 금액 : " + totalMoney);
-        }
-    }
-
-    @Override
-    public String selectContent() {
-
-        Scanner sc = new Scanner(System.in);
-        System.out.println("조회할 항목을 입력하시오.");
-        String content1 = sc.nextLine();
-
-        List<String> result = contentMap.get(content1);
-        List<Integer> result2 = moneyMap.get(content1);
-        System.out.println(result);
-        System.out.println(result2);
-        return content1;
-    }
-
-
-
-
-
-    @Override
-    public void deleteContent() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("검색할 항목을 입력하세요.");
-        String date = sc.nextLine().trim();
-        contentMap.remove(date);
-        System.out.println("삭제되었습니다.");
+        String date = bookMap.keySet().toArray()[0].toString();
+        bookMap.forEach((book, money) -> System.out.println(date + book + " - " + money));
 
     }
 
     @Override
     public void deleteAll() {
-       contentMap.clear();
-        System.out.println("모두 삭제되었습니다.");
+        bookMap.clear();
+    }
+
+    @Override
+    public void deleteBook() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("[삭제]항목을 입력하세요.");
+        String book = sc.nextLine();
+
+        if (!checkBook(book)) {
+            System.out.println("찾으시는 회원이 없습니다");
+            return;
+        }
+
+        bookMap.remove(book);
+    }
+
+    @Override
+    public int printMenu() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("[메뉴를 선택하세요");
+        System.out.println("[1]항목추가 [2]전체조회 [3]전체삭제");
+        System.out.println("[4]내역삭제 [5]종료");
+
+        return sc.nextInt();
     }
 
 
-    public int getTotalMoney() {
-        return totalMoney;
-    }
-
-    public void setTotalMoney(int totalMoney) {
-        this.totalMoney = totalMoney;
+    private boolean checkBook(String book) {
+        return bookMap.containsKey(book);
     }
 }
