@@ -20,7 +20,7 @@ package himedia.Practice.AccountBook2.AccountBook;
 //5. 프로그램 종료
 public interface AccountBook {
     void addBook();
-    void bookAll();
+    void bookAll() ;
     void deleteAll();
     void deleteBook();
     int printMenu();

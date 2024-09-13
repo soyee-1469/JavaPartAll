@@ -3,14 +3,13 @@ package himedia.Practice.AccountBook2.AccountBook;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.Scanner;
+import java.util.*;
 
 public class AccountBookImpl implements AccountBook {
-    HashMap<String, Integer> bookMap;
+    private Map<String, String[]> bookMap;
 
     public AccountBookImpl() {
-        this.bookMap = new HashMap<>();
+        bookMap = new HashMap<>();
     }
 
     @Override
@@ -22,24 +21,25 @@ public class AccountBookImpl implements AccountBook {
         String book = sc.nextLine();
         System.out.println("금액을 입력하세요");
         int money = sc.nextInt();
-        bookMap.put(book, money);
-        bookMap.put(date, money);
-        System.out.println(date + " - " + book + " - " + money);
+        bookMap.put(date, new String[]{book, String.valueOf(money)});
+
 
     }
 
+    public void bookAll() {
+        for( String key : bookMap.keySet() ) {
+            String[] infos = bookMap.get(key);
+            System.out.println("[날짜] " + key + ", [항목] " + infos[0] + ", [금액] " + infos[1]);
+        }
+    }
+
+
     public String getNowDateTime() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
         return LocalDateTime.now().format(formatter);
     }
 
-    @Override
-    public void bookAll() {
 
-        String date = bookMap.keySet().toArray()[0].toString();
-        bookMap.forEach((book, money) -> System.out.println(date + book + " - " + money));
-
-    }
 
     @Override
     public void deleteAll() {

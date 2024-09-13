@@ -1,0 +1,72 @@
+데이터를 추가, 수정, 삭제하는 데이터 조작어 DML
+INSERT문
+INSERT INTO 테이블명(열1,열2,...열N)
+VALUES(열1데이터, 열2데이터, ...열N데이터);
+CREATE TABLE DEPT_TEMP AS SELECT * FROM DEPT; -- 데이터복제
+-- 열지정 삽입
+INSERT INTO DEPT_TEMP(DEPTNO,DNAME,LOC)VALUES(50,'DATABASE','SEOUL');
+SELECT * FROM DEPT_TEMP;
+-- 열지정 생략 : 해당 모든 열에 데이터를 넣을때에만 가능
+INSERT INTO DEPT_TEMP VALUES(60,'NETWORK','BUSAN');
+-- NULL지정
+INSERT INTO DEPT_TEMP(DEPTNO,DNAME,LOC)VALUES(70,'WEB',NULL);
+-- NULL암시적 삽입
+INSERT INTO DEPT_TEMP(DEPTNO,LOC)VALUES(80,'INCHEON');
+
+SELECT * FROM EMP_TEMP_1;
+CREATE TABLE EMP_TEMP_1 AS SELECT * FROM EMP WHERE 1<>1; -- 끝에 부정을 넣어주면 스키마(항목)만 딸려온다
+#  WHERE절의 조건이 1<>이기 때문에 각 행을 조건식에 대입한 결과 값은 항상 FALSE가 되어 결과적으로 행(데이터)은 만들어지지 않는다.
+# 서브쿼리를 이용하여 한 번에 여러 데이터 추가하기 유의점
+#  1) VALUES절은 사용하지 않는다.
+#  2)데이터가 추가되는 테이블의 열 개수와 서브쿼리의 열 갯수가 일치해야한다.
+#  3)데이터가 추가되는 테이블의 자료형과 서브쿼리의 자료형이 일치해야한다.
+ INSERT INTO EMP_TEMP_1(EMPNO, ENAME, JOB,MGR, HIREDATE,SAL,COMM,DEPTNO)
+ SELECT E.EMPNO, E.ENAME,E.JOB,E.MGR,E.HIREDATE,E.SAL,E.COMM,E.DEPTNO
+FROM EMP E, SALGRADE S
+ WHERE E.SAL BETWEEN S.LOSAL AND S.HISAL
+ AND S.GRADE = 1;
+-- 이름에 A자가 들어가 있는 EMP테이블의 데이터를 EMP_TEMP테이블로 삽입
+INSERT INTO EMP_TEMP_1(EMPNO, ENAME, JOB,MGR, HIREDATE,SAL,COMM,DEPTNO)
+SELECT (EMPNO, ENAME, JOB,MGR, HIREDATE,SAL,COMM,DEPTNO)
+FROM EMP
+WHERE ENAME LIKE '%A%';
+
+CREATE TABLE DEPT_TEMP2
+AS SELECT * FROM DEPT;
+SELECT * FROM DEPT_TEMP;
+
+-- 업데이트문
+# UPDATE[변경할 테이블명]
+# SET[변경할 열1] = [데이터], [변경할 열2]=[데이터]...[변경할 열 X]=[데이터]
+# WHERE[데이터를 변경할 대상 행을 선별하기 위한 조건]
+
+UPDATE DEPT_TEMP2
+SET LOC = 'SEOUL', DNAME = 'DATABASE'
+WHERE DEPTNO = 40;
+
+-- 서브쿼리를 사용하여 데이터 수정
+UPDATE DEPT_TEMP2
+SET LOC = 'BUSAN'
+WHERE DEPTNO IN(SELECT DEPTNO FROM DEPT WHERE LOC = 'SEOUL'); -- 복사한 테이블이아닌 원본테이블명? FROM DEPT_TEMP2라고 하면 에러
+
+# DELETE문
+# DELETE FROM[테이블명]
+# WHERE 삭제할 대상을 선별할 조건식;
+
+DELETE FROM EMP_TEMP_1
+WHERE JOB = 'MANAGER';
+
+# 서브쿼리를 사용하여 데이터 삭제
+DELETE
+FROM EMP_TEMP_1
+WHERE EMPNO IN
+      (SELECT E.EMPNO FROM EMP E, SALGRADE S WHERE E.SAL BETWEEN S.LOSAL AND S.HISAL AND GRADE = 3 AND E.DEPTNO = 30);
+
+# 트랜젝션과 세션
+# 트랜잭션이란 더 이상 분할할 수 없는 최소 수행 단위를 뜻하며 계좌 이체와 같이 하나의 작업 또는 밀접하게 연관된 작업을
+# 수행하기 위해 하나 이상의 데이터 조작 명령어로 이루어진다. 즉 어떤기능 한 가지를 수행하는 'SQL문 덩어리'라고 볼 수 있다.
+# 트랜잭션은 하나의 트랜잭션 내에 있는 여러 명령어를 한 번에 수행하여 작업ㅇ르 완료하거나
+# 아예 모두 수행하지 않은 상태, 즉 모든 작업을 취소한다.
+# 이러한 늑성으로 트랜잭션 의미를 ALL OR NOTHING 문장으로 표헌하기도 한다.
+# 그리고 트랜잭션 제어하기 위해 사용하는 명령어를 TCL(TRANSACTION CONTROL LANGUAGE)라고 한다.
+# 키워드 : COMMIT, ROLLBACK, 
