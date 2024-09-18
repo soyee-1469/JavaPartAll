@@ -6,5 +6,8 @@ public interface Notice {
     void login();
     void allList();
     void upload();
-
+    void edit();
+    void delete();
+    void logout();
+    void deleteUser();
 }
