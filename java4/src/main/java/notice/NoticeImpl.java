@@ -63,7 +63,7 @@ public class NoticeImpl implements Notice {
         SignInResponseDTO signInResponseDTO = noticeDAO.signInExc(userId, password);
         if (signInResponseDTO != null) {
 
-            if (signInResponseDTO.isStatus()) {
+            if (signInResponseDTO.isStatus()) { //isStatus -> boolean
                 setUserInfo(
                         signInResponseDTO.isStatus(),
                         signInResponseDTO.getUserId(),

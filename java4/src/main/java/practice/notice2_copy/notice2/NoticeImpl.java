@@ -35,11 +35,11 @@ public class NoticeImpl implements Notice {
         String userid = sc.nextLine();
         System.out.println("비밀번호를 입력해주세요");
         String password = sc.nextLine();
-        database(userid, password);
+        signupDatabase(userid, password);
     }
 
     //회원가입 정보(userid, password user테이블에 저장하기
-    private void database(String userid, String password) {
+    private void signupDatabase(String userid, String password) {
         String query = "INSERT INTO USER (userid,password) VALUES (?,?)";
         try (
                 Connection conn = connection();
@@ -81,7 +81,7 @@ public class NoticeImpl implements Notice {
             if (resultSet.next()) {
                 String id = resultSet.getString("userid");
                 System.out.println("로그인되었습니다." + id);
-               this.userid = id;
+                this.userid = id;
             }
 
 
@@ -90,5 +90,145 @@ public class NoticeImpl implements Notice {
         }
     }
 
+    public void upload() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("제목을 입력해주세요");
+        String subject = sc.nextLine();
+        System.out.println("내용을 입력해주세요");
+        String content = sc.nextLine();
+        uploadDatabase(subject, content);
+    }
 
+
+    private void uploadDatabase(String subject, String content) {
+        String query = "INSERT INTO CONTENT (userid,subject,content) VALUES (?,?,?)";
+        try (
+                Connection conn = connection();
+                PreparedStatement preparedStatement = conn.prepareStatement(query);
+        ) {
+            preparedStatement.setString(1, userid);
+            preparedStatement.setString(2, subject);
+            preparedStatement.setString(3, content);
+            preparedStatement.executeUpdate();
+            System.out.println("게시글이 등록되었습니다.");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    //모든 리스트 불러오기 모두공개
+    public void allList() {
+        String query = "select num,userid,subject,content FROM CONTENT";
+
+        try (
+                Connection conn = connection();
+                PreparedStatement preparedStatement = conn.prepareStatement(query);
+
+        ) {
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                int num = rs.getInt("num");
+                String userid = rs.getString("userid");
+                String subject = rs.getString("subject");
+                String content = rs.getString("content");
+                System.out.println("[" + num + "]" + userid + "subject :" + subject + " - " + "content :" + content);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void edit() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("수정할 번호를 입력해주세요");
+        int num = sc.nextInt();
+        editDatabase(num);
+    }
+
+
+    private void editDatabase(int num) {
+        String query = "UPDATE CONTENT SET userid = ?, subject = ?, content = ? WHERE num = ?";
+
+        try (
+                Connection conn = connection();
+                PreparedStatement preparedStatement = conn.prepareStatement(query);
+        ) {
+            Scanner sc = new Scanner(System.in);
+            preparedStatement.setString(1, userid);
+            System.out.println("제목을 입력하세요");
+            String subject = sc.nextLine();
+            preparedStatement.setString(2, subject);
+            System.out.println("내용을 입력하세요");
+            String content = sc.nextLine();
+            preparedStatement.setString(3, content);
+
+            preparedStatement.setInt(4, num);
+
+            int result = preparedStatement.executeUpdate();
+            if (result > 0) {
+                System.out.println("수정되었습니다.");
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void delete() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("삭제할 번호를 입력해주세요");
+        int num = sc.nextInt();
+        deleteDatabase(num);
+    }
+
+    public void deleteDatabase(int num) {
+        String query = "DELETE FROM CONTENT WHERE num = ?";
+        try (
+                Connection conn = connection();
+                PreparedStatement preparedStatement = conn.prepareStatement(query);
+        ) {
+            preparedStatement.setInt(1, num);
+            int result = preparedStatement.executeUpdate();
+            if (result > 0) {
+                System.out.println("삭제되었습니다.");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+    public void logout(){
+        userid = null;
+    }
+
+    @Override
+    public void deleteUser(){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("삭제할 아이디를 입력해주세요");
+        String userid = sc.nextLine();
+        deleteUserDatabase(userid);
+    }
+
+    public void deleteUserDatabase(String userid){
+        String query = "DELETE FROM USER WHERE userid = ?";
+        try(
+                Connection conn = connection();
+                PreparedStatement preparedStatement = conn.prepareStatement(query);
+                ){
+            preparedStatement.setString(1, userid);
+            int result = preparedStatement.executeUpdate();
+            if (result > 0) {
+                System.out.println("아이디가 삭제되었습니다.");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
+
+
+
+

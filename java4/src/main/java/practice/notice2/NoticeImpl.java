@@ -91,6 +91,10 @@ public class NoticeImpl implements Notice {
     }
 
     public void upload() {
+        if (userid == null) {
+            System.out.println("로그인 후 이용가능합니다.");
+            return;
+        }
         Scanner sc = new Scanner(System.in);
         System.out.println("제목을 입력해주세요");
         String subject = sc.nextLine();
@@ -141,6 +145,10 @@ public class NoticeImpl implements Notice {
 
     @Override
     public void edit() {
+        if (userid == null) {
+            System.out.println("로그인 후 이용가능합니다.");
+            return;
+        }
         Scanner sc = new Scanner(System.in);
         System.out.println("수정할 번호를 입력해주세요");
         int num = sc.nextInt();
@@ -178,6 +186,10 @@ public class NoticeImpl implements Notice {
 
     @Override
     public void delete() {
+        if (userid == null) {
+            System.out.println("로그인 후 이용가능합니다.");
+            return;
+        }
         Scanner sc = new Scanner(System.in);
         System.out.println("삭제할 번호를 입력해주세요");
         int num = sc.nextInt();
@@ -201,11 +213,17 @@ public class NoticeImpl implements Notice {
 
     }
     public void logout(){
+
         userid = null;
+        System.out.println("로그아웃되었습니다.");
     }
 
     @Override
     public void deleteUser(){
+        if (userid == null) {
+            System.out.println("로그인 후 이용가능합니다.");
+            return;
+        }
         Scanner sc = new Scanner(System.in);
         System.out.println("삭제할 아이디를 입력해주세요");
         String userid = sc.nextLine();
@@ -213,6 +231,7 @@ public class NoticeImpl implements Notice {
     }
 
     public void deleteUserDatabase(String userid){
+
         String query = "DELETE FROM USER WHERE userid = ?";
         try(
                 Connection conn = connection();

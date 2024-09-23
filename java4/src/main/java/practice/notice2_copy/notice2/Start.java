@@ -23,16 +23,22 @@ public class Start {
                     notice.signup();
                     break;
                 case 3:
+                    notice.allList();
                     break;
                 case 4:
+                    notice.upload();
                     break;
                 case 5:
+                    notice.edit();
                     break;
                 case 6:
+                    notice.delete();
                     break;
                 case 7:
+                    notice.logout();
                     break;
                 case 8:
+                    notice.deleteUser();
                     break;
                 case 9:
                     System.out.println("종료되었습니다.");
