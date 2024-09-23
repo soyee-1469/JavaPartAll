@@ -1,4 +1,4 @@
-package com.example.tobi.springbook.user.dao;
+package com.example.tobi.springbook.user.dao.dao;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -7,21 +7,21 @@ import org.springframework.context.annotation.Configuration;
 public class DaoFactory {
     @Bean
     public UserDao userDao(){
-//        ConnectionMaker connectionMaker = new DConnectionMaker();
-//        UserDao userDao = new UserDao(connectionMaker);
+    UserDao userDao = new UserDao();
+    userDao.setDataSource(dataSource());
+    return userDao;
+    }
 
-        return new UserDao(connectionMaker()) ;
-    }
     @Bean
-    public AccountDao accountDao(){
-        return new AccountDao(connectionMaker()) ;
+    public DataSource dataSource(){
+
+        SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
+        dataSource.setDriverClass(com.mysql.jdbc.Driver.class);
+        dataSource.setUrl("jdbc:mysql://localhost:3306/springbook");
+        dataSource.setUsername("root");
+        dataSource.setPassword("book");
+        return dataSource;
     }
-    @Bean
-    public MessageDao messageDao(){
-        return new MessageDao(connectionMaker()) ;
-    }
-    @Bean
-    public ConnectionMaker connectionMaker(){
-        return new DConnectionMaker();
-    }
+
+//
 }

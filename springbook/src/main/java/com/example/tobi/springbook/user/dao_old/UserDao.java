@@ -1,4 +1,4 @@
-package com.example.tobi.springbook.user.dao.dao;
+package com.example.tobi.springbook.user.dao2.dao;
 
 import com.example.tobi.springbook.domain.User;
 
@@ -7,11 +7,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class MessageDao {
+public class UserDao {
     //  private SimpleConnectionMaker simpleConnectionMaker;
     private ConnectionMaker connectionMaker;
 
-    public MessageDao(ConnectionMaker connectionMaker) {
+    public UserDao(ConnectionMaker connectionMaker) {
 //        simpleConnectionMaker = new SimpleConnectionMaker();
         this.connectionMaker = connectionMaker;
 
@@ -22,7 +22,7 @@ public class MessageDao {
 //        Connection c = simpleConnectionMaker.makeNewConnection();
         Connection c = connectionMaker.makeConnection();
         PreparedStatement ps = c.prepareStatement(
-                "insert into users(id,name,password) values(?,?,?)");
+        "insert into users(id,name,password) values(?,?,?)");
         ps.setString(1, user.getId());
         ps.setString(2, user.getName());
         ps.setString(3, user.getPassword());

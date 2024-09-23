@@ -1,4 +1,4 @@
-package com.example.tobi.springbook.user.dao;
+package com.example.tobi.springbook.user.dao.dao;
 
 import com.example.tobi.springbook.domain.User;
 

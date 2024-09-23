@@ -1,4 +1,4 @@
-package com.example.tobi.springbook.user.dao.dao;
+package com.example.tobi.springbook.user.dao2.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
