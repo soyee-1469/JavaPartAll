@@ -12,12 +12,24 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public class UserDao_v1 {
+public class UserDao_v2 {
     private JdbcTemplate jdbcTemplate;
+    private RowMapper<User> rowMapper;
 
-    public UserDao_v1(DataSource dataSource) {
+    public UserDao_v2(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource); //daofactory bean등록된 database 불러옴 인자로 넘긴다
+        rowMapper = new RowMapper<User>() {
+            @Override
+            public User mapRow(ResultSet rs, int rowNum) throws SQLException {
+                User user = new User();
+                user.setId(rs.getString("id")); //중복 x
+                user.setName(rs.getString("name"));
+                user.setPassword(rs.getString("password"));
+                return user;
+            }
+        };
     }
+
 
     public void add(User user) {
         this.jdbcTemplate.update("insert into user(id,name,password) values(?,?,?)",
@@ -39,16 +51,7 @@ public class UserDao_v1 {
     public List<User> getAll() {
         return this.jdbcTemplate.query(
                 "select * from users",
-                new RowMapper<User>() {
-                    @Override
-                    public User mapRow(ResultSet rs, int rowNum) throws SQLException {
-                        User user = new User();
-                        user.setId(rs.getString("id"));
-                        user.setName(rs.getString("name"));
-                        user.setPassword(rs.getString("password"));
-                        return user;
-                    }
-                }
+                this.rowMapper
         );
     }
 
@@ -56,16 +59,7 @@ public class UserDao_v1 {
         return this.jdbcTemplate.queryForObject(
                 "select * from user where id=?",
                 new Object[]{id},
-                new RowMapper<User>() {
-                    @Override
-                    public User mapRow(ResultSet rs, int rowNum) throws SQLException {
-                        User user = new User();
-                        user.setId(rs.getString("id")); //중복 x
-                        user.setName(rs.getString("name"));
-                        user.setPassword(rs.getString("password"));
-                        return user;
-                    }
-                }
+                this.rowMapper
         );
     }
 

@@ -1,9 +1,6 @@
-package com.example.tobi.springtobi.ch03.ex_3_5.calc.templeta_v1;
-
-import org.springframework.data.relational.core.sql.In;
+package com.example.tobi.springtobi.ch03.ex_3_5.calc.template_v1;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 

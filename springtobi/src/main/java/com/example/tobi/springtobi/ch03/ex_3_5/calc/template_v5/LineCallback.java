@@ -1,5 +1,5 @@
-package com.example.tobi.springtobi.ch03.ex_3_5.calc.template_v4;
+package com.example.tobi.springtobi.ch03.ex_3_5.calc.template_v5;
 
-public interface LineCallback {
-    Integer doSomethingWithLine(String line, Integer value);
+public interface LineCallback<T> {
+    T doSomethingWithLine(String line,T value);
 }

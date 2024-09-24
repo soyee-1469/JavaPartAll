@@ -15,18 +15,9 @@ public class UserDao {
         this.dataSource = dataSource;
     }
 
-//    //  private SimpleConnectionMaker simpleConnectionMaker;
-//    private ConnectionMaker connectionMaker;
-//
-//    public UserDao(ConnectionMaker connectionMaker) {
-////        simpleConnectionMaker = new SimpleConnectionMaker();
-//        this.connectionMaker = connectionMaker;
-
-
 
     public void add(User user) throws SQLException {
-//        Connection c = getConnection(); SimpleConnectionMaker로 뺌
-//        Connection c = simpleConnectionMaker.makeNewConnection();
+
         Connection c = dataSource.getConnection();
         PreparedStatement ps = c.prepareStatement(
         "insert into users(id,name,password) values(?,?,?)");
@@ -40,8 +31,7 @@ public class UserDao {
     }
 
     public User get(String id) throws ClassNotFoundException, SQLException {
-        //        Connection c = getConnection(); SimpleConnectionMaker로 뺌
-//        Connection c = simpleConnectionMaker.makeNewConnection();
+
         Connection c = dataSource.getConnection();
         PreparedStatement ps = c.prepareStatement(
                 "select * from users where id=?");
@@ -58,12 +48,29 @@ public class UserDao {
         return user;
     }
 
-//    private Connection getConnection() throws ClassNotFoundException, SQLException {
-//        Class.forName("com.mysql.jdbc.Driver");
-//        Connection c = DriverManager.getConnection(
-//                "jdbc:mysql://localhost:3306/springbook", "root", "1234");
-//        return c;
-//    } -> SimpleConnectionMaker로 뺌
-
+    public void deleteAll() throws SQLException {
+        Connection c = null;
+        PreparedStatement ps = null;
+        try {
+            c = dataSource.getConnection();
+            ps = c.prepareStatement("delete from users");
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw e;
+        } finally { //finally 예외상황 상관없이 반드시 실행될때 사용
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                }
+            }
+        }
+        if (c != null) {
+            try {
+                c.close();
+            } catch (SQLException e) {
+            }
+        }
+    }
 
 }

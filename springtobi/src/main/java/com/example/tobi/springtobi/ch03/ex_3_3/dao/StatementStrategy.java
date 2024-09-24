@@ -1,4 +1,4 @@
-package com.example.tobi.springtobi.ch03.ex_3_4.dao;
+package com.example.tobi.springtobi.ch03.ex_3_3.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

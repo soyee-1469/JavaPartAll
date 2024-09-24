@@ -1,4 +1,4 @@
-package com.example.tobi.springtobi.ch03.ex_3_5.calc.template_v3;
+package com.example.tobi.springtobi.ch03.ex_3_5.calc.template_v4;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -7,41 +7,34 @@ import java.io.IOException;
 
 public class Calculator {
     public Integer calcSum(String filepath) throws IOException {
-        BufferedReaderCallback callback = new BufferedReaderCallback() {
+        LineCallback callback = new LineCallback() {
             @Override
-            public Integer doSomethingWithReader(BufferedReader reader) throws IOException {
-                Integer sum = 0;
-                String line;
-
-                while ((line = reader.readLine()) != null) {
-                    sum += Integer.valueOf(line);
-                }
-                return sum;
+            public Integer doSomethingWithLine(String line, Integer value) {
+                return Integer.valueOf(line) + value;
             }
         };
-        return fileReadTemplate(filepath, callback);
+        return LineReadTemplate(filepath, callback, 0);
     }
 
     public Integer calcMultiply(String filepath) throws IOException {
-        BufferedReaderCallback callback = new BufferedReaderCallback() {
+        LineCallback callback = new LineCallback() {
             @Override
-            public Integer doSomethingWithReader(BufferedReader reader) throws IOException {
-                Integer multiply = 1;
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    multiply *= Integer.valueOf(line);
-                }
-                return multiply;
+            public Integer doSomethingWithLine(String line, Integer value) {
+                return Integer.valueOf(line) * value;
             }
         };
-        return fileReadTemplate(filepath, callback);
+        return LineReadTemplate(filepath, callback, 1);
     }
 
-    public Integer fileReadTemplate(String filepath, BufferedReaderCallback callback) throws IOException {
+    public Integer LineReadTemplate(String filepath, LineCallback callback, int initValue) throws IOException {
         BufferedReader br = null;
         try {
             br = new BufferedReader(new FileReader(filepath));
-            int result = callback.doSomethingWithReader(br);
+            Integer result = initValue;
+            String line;
+            while ((line = br.readLine()) != null) {
+                result = callback.doSomethingWithLine(line, result);
+            }
             return result;
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);

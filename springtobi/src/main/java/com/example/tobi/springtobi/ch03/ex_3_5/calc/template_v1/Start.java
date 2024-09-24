@@ -1,4 +1,4 @@
-package com.example.tobi.springtobi.ch03.ex_3_5.calc.templeta_v1;
+package com.example.tobi.springtobi.ch03.ex_3_5.calc.template_v1;
 
 import java.io.File;
 import java.io.IOException;

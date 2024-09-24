@@ -1,6 +1,6 @@
-package com.example.tobi.springtobi.ch03.ex_3_4.dao;
+package com.example.tobi.springtobi.ch03.ex_3_3.dao;
 
-import com.example.tobi.springtobi.ch03.ex_3_4.domain.User;
+import com.example.tobi.springtobi.ch03.ex_3_3.domain.User;
 
 import javax.sql.DataSource;
 import java.sql.Connection;

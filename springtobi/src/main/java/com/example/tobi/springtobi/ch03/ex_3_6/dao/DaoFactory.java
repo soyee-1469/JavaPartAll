@@ -1,4 +1,4 @@
-package com.example.tobi.springtobi.ch03.ex_3_5.dao;
+package com.example.tobi.springtobi.ch03.ex_3_6.dao;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,8 +10,8 @@ import javax.sql.DataSource;
 public class DaoFactory {
 
     @Bean
-    public UserDao userDao() {
-        return new UserDao(dataSource(), jdbcContext());
+    public UserDao_v1 userDao() {
+        return new UserDao_v1(dataSource(), jdbcContext());
     }
 
     @Bean

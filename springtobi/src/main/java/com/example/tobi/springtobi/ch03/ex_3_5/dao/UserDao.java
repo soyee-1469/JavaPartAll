@@ -1,6 +1,6 @@
-package com.example.tobi.springtobi.ex_3_5.dao;
+package com.example.tobi.springtobi.ch03.ex_3_5.dao;
 
-import com.example.tobi.springtobi.ex_3_5.domain.User;
+import com.example.tobi.springtobi.ch03.ex_3_5.domain.User;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -13,7 +13,7 @@ public class UserDao {
     private DataSource dataSource;
     private JdbcContext jdbcContext;
 
-    public UserDao(DataSource dataSource) {
+    public UserDao(DataSource dataSource, JdbcContext jdbcContext) {
         this.dataSource = dataSource;
         this.jdbcContext = new JdbcContext(dataSource);
     }
