@@ -1,6 +1,6 @@
-package com.example.tobi.springbook.user.dao.dao;
+package com.example.tobi.springbook.user.dao;
 
-import com.example.tobi.springbook.domain.User;
+import com.example.tobi.springbook.user.domain.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

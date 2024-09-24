@@ -1,6 +1,6 @@
-package com.example.tobi.springbook.user.dao.dao;
+package com.example.tobi.springbook.user.dao;
 
-import com.example.tobi.springbook.domain.User;
+import com.example.tobi.springbook.user.domain.User;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -17,7 +17,7 @@ public class UserDaoTest {
 //      UserDao dao = new UserDao(connectionMaker);
 //        UserDao dao = new DaoFactory().userDao();
         User user = new User();
-        user.setId("user");
+        user.setId("user2");
         user.setName("백기선");
         user.setPassword("married");
 

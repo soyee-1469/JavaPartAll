@@ -1,6 +1,6 @@
-package com.example.tobi.springbook.user.dao2.dao;
+package com.example.tobi.springbook.user.dao_old;
 
-import com.example.tobi.springbook.domain.User;
+import com.example.tobi.springbook.user.domain.User;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 

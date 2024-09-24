@@ -1,4 +1,4 @@
-package com.example.tobi.springbook.user.dao2.dao;
+package com.example.tobi.springbook.user.dao_old;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

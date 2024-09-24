@@ -1,4 +1,4 @@
-package com.example.tobi.springtobi.ch03.ex_3_2.domain;
+package com.example.tobi.springtobi.ch03.ex_3_4.domain;
 
 public class User {
     String id;
