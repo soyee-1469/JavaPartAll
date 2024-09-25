@@ -1,12 +1,9 @@
-package com.example.tobi.springtobi.ch05.ex_5_1.dao;
+package com.example.tobi.springtobi.ch05.ex_5_2.dao;
 
-import com.example.tobi.springtobi.ch03.ex_3_5.dao.JdbcContext;
-import com.example.tobi.springtobi.ch05.ex_5_1.service.UserService_v1;
-import com.example.tobi.springtobi.ch05.ex_5_1.service.UserService_v2;
+import com.example.tobi.springtobi.ch05.ex_5_2.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
-
 import javax.sql.DataSource;
 
 @Configuration
@@ -15,6 +12,11 @@ public class DaoFactory {
     @Bean
     public UserDao userDao() {
         return new UserDaoJdbc(dataSource());
+    }
+
+    @Bean
+    public UserService userService() {
+        return new UserService(userDao());
     }
 
     @Bean
@@ -27,8 +29,5 @@ public class DaoFactory {
 
         return dataSource;
     }
-    @Bean
-    public UserService_v2 userService() {
-        return new UserService_v2(userDao());
-    }
+
 }

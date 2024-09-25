@@ -1,18 +1,21 @@
-package com.example.tobi.springtobi.ch05.ex_5_1.service;
+package com.example.tobi.springtobi.ch05.ex_5_2.service;
 
-import com.example.tobi.springtobi.ch05.ex_5_1.dao.UserDao;
-import com.example.tobi.springtobi.ch05.ex_5_1.domain.Level;
-import com.example.tobi.springtobi.ch05.ex_5_1.domain.User;
+import com.example.tobi.springtobi.ch05.ex_5_2.dao.UserDao;
+import com.example.tobi.springtobi.ch05.ex_5_2.domain.Level;
+import com.example.tobi.springtobi.ch05.ex_5_2.domain.User;
 
 import java.util.List;
 
-public class UserService_v2 {
+public abstract class UserService {
     public static final int MIN_LOGCOUNT_FOR_SILVER = 50;
     public static final int MIN_RECCOMMEND_FOR_GOLD = 30;
 
     private UserDao userDao;
 
-    public UserService_v2(UserDao userDao) {
+    public UserService(String id) {
+    }
+
+    public UserService(UserDao userDao) {
         this.userDao = userDao;
     }
 
@@ -46,9 +49,32 @@ public class UserService_v2 {
         }
     }
 
-    private void upgradeLevel(User user) {
+    protected void upgradeLevel(User user) {
         user.upgradeLevel();
         userDao.update(user);
+
+    }
+
+    protected abstract void upgradeLevels(User user);
+
+    static class TestUserService extends UserService {
+        private String id;
+
+
+        public TestUserService(String id) {
+            super(id);
+            this.id = id;
+        }
+
+        @Override
+        protected void upgradeLevels(User user) {
+            if (user.getId().equals(id)) {
+                throw new TextUserServiceException();
+            }
+        }
+    }
+
+    static class TextUserServiceException extends RuntimeException {
 
     }
 }

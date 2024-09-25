@@ -1,8 +1,8 @@
-package com.example.tobi.springtobi.ch05.ex_5_1;
+package com.example.tobi.springtobi.ch05.ex_5_2;
 
 
 
-import com.example.tobi.springtobi.ch05.ex_5_1.dao.DaoFactory;
+import com.example.tobi.springtobi.ch05.ex_5_2.dao.DaoFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 

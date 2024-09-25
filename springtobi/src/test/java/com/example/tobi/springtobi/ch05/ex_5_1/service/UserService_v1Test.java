@@ -15,6 +15,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.*;
+
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = DaoFactory.class)
 class UserService_v1Test {
@@ -52,6 +54,6 @@ class UserService_v1Test {
 
     private void checkLevel(User user, Level expectedLevel){
         User userUpdate = userDao.get(user.getId());
-        Assertions.assertThat(userUpdate.getLevel()).isEqualTo(expectedLevel);
+        assertThat(userUpdate.getLevel()).isEqualTo(expectedLevel);
     }
 }
