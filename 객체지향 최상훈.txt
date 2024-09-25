@@ -1,0 +1,9 @@
+개구리책 176p solid 5원칙 중심으루~
+[객체지향 SW 설계의 원칙] ① 개방-폐쇄 원칙
+https://zdnet.co.kr/view/?no=00000039134727
+[객체지향 SW 설계의 원칙] ② 사례연구, 단일 책임 원칙
+https://zdnet.co.kr/view/?no=00000039135552
+[객체지향 SW 설계의 원칙] ③ 인터페이스 분리의 원칙
+https://zdnet.co.kr/view/?no=00000039139151
+[객체지향 SW 설계의 원칙] ④ 리스코프 치환 원칙
+https://zdnet.co.kr/view/?no=00000039137043

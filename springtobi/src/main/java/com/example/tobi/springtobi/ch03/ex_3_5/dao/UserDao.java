@@ -66,7 +66,7 @@ public class UserDao {
 
         try {
             conn = dataSource.getConnection();
-            ps = conn.prepareStatement("select count(*) from user");
+            ps = conn.prepareStatement("select count(*) from users");
             rs = ps.executeQuery();
             rs.next();
 

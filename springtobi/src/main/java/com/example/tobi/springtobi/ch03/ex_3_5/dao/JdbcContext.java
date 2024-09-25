@@ -42,7 +42,7 @@ public class JdbcContext {
                     public PreparedStatement makePreparedStatement(Connection connection) throws SQLException {
 
                         PreparedStatement ps;
-                        ps = connection.prepareStatement("delete from user");
+                        ps = connection.prepareStatement("delete from users");
 
                         return ps;
                     }
