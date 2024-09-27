@@ -1,6 +1,7 @@
 package com.example.tobi.springtobi.ch05.ex_5_1.domain;
 
 public class User {
+
     String id;
     String name;
     String password;
@@ -8,8 +9,7 @@ public class User {
     int login;
     int recommend;
 
-    public User() {
-    }
+    public User() {}
 
     public User(String id, String name, String password, Level level, int login, int recommend) {
         this.id = id;
@@ -76,5 +76,4 @@ public class User {
             this.level = nextedLevel;
         }
     }
-
 }

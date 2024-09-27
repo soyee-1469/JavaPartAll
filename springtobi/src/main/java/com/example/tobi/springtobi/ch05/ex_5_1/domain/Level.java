@@ -1,7 +1,10 @@
 package com.example.tobi.springtobi.ch05.ex_5_1.domain;
 
 public enum Level {
-     GOLD(3, null),SILVER(2, GOLD), BASIC(1, SILVER),;
+    GOLD(3, null),
+    SILVER(2, GOLD),
+    BASIC(1, SILVER);
+
     private final int value;
     private final Level level;
 
@@ -28,7 +31,6 @@ public enum Level {
                 return GOLD;
             default:
                 throw new IllegalArgumentException("Unknown level: " + value);
-
         }
     }
 }

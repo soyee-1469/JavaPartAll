@@ -4,6 +4,7 @@ import com.example.tobi.springtobi.ch05.ex_5_1.dao.DaoFactory;
 import com.example.tobi.springtobi.ch05.ex_5_1.dao.UserDao;
 import com.example.tobi.springtobi.ch05.ex_5_1.domain.Level;
 import com.example.tobi.springtobi.ch05.ex_5_1.domain.User;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,8 +14,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Arrays;
 import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = DaoFactory.class)
@@ -45,7 +44,7 @@ class UserService_v2Test {
         }
 
         // when
-        userService.upgradeLevels();
+        userService.upgradelevels();
 
         // then
         checkLevel(users.get(0), Level.BASIC);
@@ -56,8 +55,9 @@ class UserService_v2Test {
 
     }
 
-    private void checkLevel(User user, Level expectedLevel){
+    private void checkLevel(User user, Level expectedLevel) {
         User userUpdate = userDao.get(user.getId());
-        assertThat(userUpdate.getLevel()).isEqualTo(expectedLevel);
+        Assertions.assertThat(userUpdate.getLevel()).isEqualTo(expectedLevel);
     }
+
 }

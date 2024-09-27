@@ -14,42 +14,34 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class UserDaoJdbc implements UserDao {
+
     private JdbcTemplate jdbcTemplate;
     private RowMapper<User> rowMapper;
 
     public UserDaoJdbc(DataSource dataSource) {
-        this.jdbcTemplate = new JdbcTemplate(dataSource); //daofactory bean등록된 database 불러옴 인자로 넘긴다
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
         rowMapper = new RowMapper<User>() {
             @Override
             public User mapRow(ResultSet rs, int rowNum) throws SQLException {
                 User user = new User();
-                user.setId(rs.getString("id")); //중복 x
+                user.setId(rs.getString("id"));
                 user.setName(rs.getString("name"));
                 user.setPassword(rs.getString("password"));
-                user.setLevel(Level.valueOf(rs.getInt("level"))); //basic,gold,silver 스위치숫자 떤져주는 로직
-                //큰 숫자 사용을 안할거라 가장 작은단위 tinyint 사용으로 용량줄이기
+                user.setLevel( Level.valueOf(rs.getInt("level")) );
                 user.setLogin(rs.getInt("login"));
                 user.setRecommend(rs.getInt("recommend"));
+
                 return user;
             }
         };
     }
 
-
-//    public void add(User user) {
-//        this.jdbcTemplate.update(
-//                "insert into users(id,name,password,level,login,recommend) values(?,?,?,?,?,?)",
-//                user.getId(), user.getName(), user.getPassword(),  user.getLevel(), user.getLogin(), user.getRecommend()
-//        );
-//    }
     public void add(User user) {
         this.jdbcTemplate.update(
                 "insert into users(id, name, password, level, login, recommend) values(?,?,?,?,?,?)",
                 user.getId(), user.getName(), user.getPassword(), user.getLevel().getValue(), user.getLogin(), user.getRecommend()
         );
     }
-
-
 
     public void deleteAll() {
         this.jdbcTemplate.update(
@@ -63,15 +55,13 @@ public class UserDaoJdbc implements UserDao {
     }
 
     public List<User> getAll() {
-        return this.jdbcTemplate.query(
-                "select * from users",
-                this.rowMapper
-        );
+        return this.jdbcTemplate
+                .query("select * from users", this.rowMapper);
     }
 
-    public User get(String id) {
+    public User get(String id){
         return this.jdbcTemplate.queryForObject(
-                "select * from users where id=?",
+                "select * from users where id = ?",
                 new Object[]{id},
                 this.rowMapper
         );

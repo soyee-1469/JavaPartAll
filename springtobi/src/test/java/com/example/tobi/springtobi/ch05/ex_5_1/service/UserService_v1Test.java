@@ -15,15 +15,15 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.*;
-
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = DaoFactory.class)
 class UserService_v1Test {
+
     @Autowired
     private UserDao userDao;
     @Autowired
     private UserService_v1 userService;
+
     List<User> users;
 
     @BeforeEach
@@ -39,21 +39,26 @@ class UserService_v1Test {
     }
 
     @Test
-    public void upgradeLevel_메서드테스트() {
+    public void upgradeLevels_메서드_테스트() {
+        // given
         for (User user : users) {
             userDao.add(user);
         }
-        userService.upgradeLevel();
-        checkLevel(users.get(0),Level.BASIC);
-        checkLevel(users.get(1),Level.SILVER);
-        checkLevel(users.get(2),Level.SILVER);
-        checkLevel(users.get(3),Level.GOLD);
-        checkLevel(users.get(4),Level.GOLD);
+
+        // when
+        userService.upgradelevels();
+
+        // then
+        checkLevel(users.get(0), Level.BASIC);
+        checkLevel(users.get(1), Level.SILVER);
+        checkLevel(users.get(2), Level.SILVER);
+        checkLevel(users.get(3), Level.GOLD);
+        checkLevel(users.get(4), Level.GOLD);
 
     }
 
-    private void checkLevel(User user, Level expectedLevel){
+    private void checkLevel(User user, Level expectedLevel) {
         User userUpdate = userDao.get(user.getId());
-        assertThat(userUpdate.getLevel()).isEqualTo(expectedLevel);
+        Assertions.assertThat(userUpdate.getLevel()).isEqualTo(expectedLevel);
     }
 }

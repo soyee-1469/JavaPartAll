@@ -1,4 +1,4 @@
-package com.example.tobi.practice.FactoryMethodPattern;
+package com.example.practice.FactoryMethodPattern;
 
 public class Cat extends Animal {
     @Override

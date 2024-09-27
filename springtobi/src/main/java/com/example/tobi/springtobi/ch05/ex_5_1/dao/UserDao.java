@@ -11,6 +11,4 @@ public interface UserDao {
     User get(String id);
     int getCount();
     void update(User user);
-
-
 }

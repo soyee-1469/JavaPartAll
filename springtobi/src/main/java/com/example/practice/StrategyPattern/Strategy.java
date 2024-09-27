@@ -1,4 +1,5 @@
 package com.example.practice.StrategyPattern;
 
-public class Strategy {
+public interface Strategy {
+    public abstract void runStrategy();
 }
