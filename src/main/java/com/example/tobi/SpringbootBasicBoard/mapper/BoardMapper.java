@@ -11,4 +11,7 @@ public interface BoardMapper {
     List<Board> selectBoardList(Paging page);
     int countBoards();
     Board selectBoardDetail(long id);
+    void write(Board board); // 성공 시 1, 실패 시 0을 반환
+    void delete(Long id);
+    void update(Board board);
 }

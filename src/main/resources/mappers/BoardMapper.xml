@@ -30,5 +30,20 @@
             resultMap="boardResultMap">
         SELECT * FROM article WHERE id = #{id};
     </select>
+    <insert id="write" parameterType="com.example.tobi.SpringbootBasicBoard.model.Board">
+        INSERT INTO article (title, content, user_id) VALUES (#{title}, #{content}, #{userId})
+    </insert>
+
+    <delete id="delete" parameterType="Long">
+        DELETE FROM article WHERE id = #{id}
+    </delete>
+
+
+    <update id="update" parameterType="com.example.tobi.SpringbootBasicBoard.model.Board">
+        UPDATE article
+        SET title = #{title},
+            content = #{content}
+        WHERE id = #{id}
+    </update>
 
 </mapper>

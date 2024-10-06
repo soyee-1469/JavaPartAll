@@ -1,10 +1,13 @@
 package com.example.tobi.SpringbootBasicBoard.controller;
 
-import com.example.tobi.SpringbootBasicBoard.dto.BoardDetailResponseDTO;
-import com.example.tobi.SpringbootBasicBoard.dto.BoardListResponseDTO;
+import org.springframework.http.HttpStatus;
+import org.springframework.ui.Model;
+import com.example.tobi.SpringbootBasicBoard.dto.*;
 import com.example.tobi.SpringbootBasicBoard.model.Board;
 import com.example.tobi.SpringbootBasicBoard.service.BoardService;
 import lombok.RequiredArgsConstructor;
+import org.apache.ibatis.javassist.NotFoundException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -48,4 +51,42 @@ public class BoardApiController {
                 .build();
     }
 
+    // 게시글 수정 요청 처리
+    @PutMapping("/{id}")
+    public ResponseEntity<BoardUpdateResponseDTO> updateBoard(@PathVariable long id, @RequestBody BoardUpdateRequestDTO boardUpdateRequestDTO) {
+        try {
+            boardService.updateBoard(id, boardUpdateRequestDTO);
+            return ResponseEntity.ok(BoardUpdateResponseDTO.builder()
+                    .message("게시글 수정 성공")
+                    .build());
+        } catch (NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(BoardUpdateResponseDTO.builder()
+                    .message("게시글을 찾을 수 없습니다.")
+                    .build());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(BoardUpdateResponseDTO.builder()
+                    .message("게시글 수정에 실패했습니다.")
+                    .build());
+        }
+    }
+
+    // 게시글 작성 요청 처리
+    @PostMapping("/write")
+    public ResponseEntity<BoardWriteResponseDTO> write(@RequestBody BoardWriteRequestDTO boardWriteRequestDTO) {
+        boardService.write(boardWriteRequestDTO);
+        return ResponseEntity.ok(
+                BoardWriteResponseDTO.builder()
+                        .url("/") // Redirect URL after successful write
+                        .build()
+        );
+    }
+
+    // 게시글 삭제 요청 처리
+    @DeleteMapping("/{id}")
+    public ResponseEntity<BoardDeleteResponseDTO> deleteBoard(@PathVariable long id) {
+        boardService.deleteBoard(id);
+        return ResponseEntity.ok(BoardDeleteResponseDTO.builder()
+                .message("Board deleted successfully.")
+                .build());
+    }
 }

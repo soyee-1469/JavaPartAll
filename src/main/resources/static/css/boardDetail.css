@@ -72,7 +72,10 @@ h1 {
 
 /* 버튼이 비활성화된 경우 스타일 */
 #editBtn:disabled {
-    background-color: #cccccc; /* 비활성화 상태의 색 */
-    cursor: not-allowed; /* 커서를 변경하여 비활성화된 느낌을 줌 */
-    color: #666666; /* 텍스트 색상 변경 */
+    display: none;
+
+}
+#deleteBtn:disabled {
+    display: none;
+
 }

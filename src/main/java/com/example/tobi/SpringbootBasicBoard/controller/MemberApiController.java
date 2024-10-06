@@ -27,7 +27,8 @@ public class MemberApiController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<SignInResponseDTO> signIn(@RequestBody SignInRequestDTO signInRequestDTO, HttpSession session) {
+    public ResponseEntity<SignInResponseDTO>
+    signIn(@RequestBody SignInRequestDTO signInRequestDTO, HttpSession session) {
         return ResponseEntity.ok(
                 memberService.signIn(signInRequestDTO.toMember(), session)
         );
